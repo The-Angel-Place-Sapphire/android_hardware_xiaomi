@@ -7,7 +7,13 @@
 phony {
     name: "XiaomiEuicc",
     required: [
-        "EuiccPolicy",
+        // "EuiccPolicy" is part of the LineageOS GMS package set and has no
+        // counterpart in StatiX's vendor/gms, so requiring it fails the
+        // missing-required-modules check in build/make/core/main.mk for every
+        // target -- hardware/xiaomi is an imported Soong namespace, so all of
+        // its modules get checked whether or not they are installed.
+        // sapphire has no eSIM and nothing puts XiaomiEuicc in
+        // PRODUCT_PACKAGES, so drop it rather than disabling the check.
         "EuiccPolicyXiaomi",
     ],
 }
